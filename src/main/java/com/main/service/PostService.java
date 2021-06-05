@@ -47,21 +47,10 @@ public class PostService implements IPostService {
 	}
 
 	@Override
-	@Cacheable(cacheNames = "postCache", key = "postList")
+	@Cacheable(value = "twenty-second-cache", key = "'PostsCache'+#postId")
 	public List<Post> getAllPost() {
 
-		List<Post> postList = new ArrayList<>();
-
-		for (int i = 0; i < 5; i++) {
-			Post post = new Post();
-
-			post.setId(postRepository.findAll().get(i).getId());
-			post.setUserId(postRepository.findAll().get(i).getUserId());
-			post.setTitle(postRepository.findAll().get(i).getTitle());
-			post.setBody(postRepository.findAll().get(i).getBody());
-
-			postList.add(post);
-		}
+		List<Post> postList = postRepository.findAll();
 		return postList;
 	}
 

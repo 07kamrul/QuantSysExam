@@ -1,8 +1,12 @@
 package com.main.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,9 +20,16 @@ public class CommentController {
 	ICommentService commentService;
 
 	@GetMapping("/get_comments")
-	public List<Comment> getComments() throws Exception {
+	public ResponseEntity<Map<String, Object>> getComments() throws Exception {
+		System.out.println("get_comments---------------------");
 
-		return commentService.getAllComment();
+		Map<String, Object> data = new HashMap<>();
+
+		List<Comment> list = commentService.getAllComment();
+
+		data.put("comments", list);
+
+		return new ResponseEntity<>(data, HttpStatus.OK);
 
 	}
 

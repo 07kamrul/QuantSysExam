@@ -47,22 +47,10 @@ public class CommentService implements ICommentService {
 	}
 
 	@Override
-	@Cacheable(cacheNames = "commentsCache", key = "commentList")
+	@Cacheable(value = "twenty-second-cache", key = "'CommentsCache'+#commentId")
 	public List<Comment> getAllComment() {
 
-		List<Comment> commentList = new ArrayList<>();
-
-		for (int i = 0; i < 5; i++) {
-			Comment comment = new Comment();
-
-			comment.setId(commentRepository.findAll().get(i).getId());
-			comment.setPostId(commentRepository.findAll().get(i).getPostId());
-			comment.setName(commentRepository.findAll().get(i).getName());
-			comment.setEmail(commentRepository.findAll().get(i).getEmail());
-			comment.setBody(commentRepository.findAll().get(i).getBody());
-
-			commentList.add(comment);
-		}
+		List<Comment> commentList = commentRepository.findAll();
 		return commentList;
 	}
 
